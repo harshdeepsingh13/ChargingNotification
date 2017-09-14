@@ -66,6 +66,11 @@ public interface Kernel32 extends StdCallLibrary {
             return (BatteryLifePercent == (byte) 255) ? "Unknown" : BatteryLifePercent + "%";
         }
 
+        public long getBatteryLifePercentLong()
+        {
+            return (BatteryLifePercent == (byte) 255) ? -1 : BatteryLifePercent;
+        }
+
         /**
          * The number of seconds of battery life remaining
          */
