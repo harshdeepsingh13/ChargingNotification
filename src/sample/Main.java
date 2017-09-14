@@ -26,7 +26,7 @@ public class Main extends Application {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Remove Please!!");
                 alert.setHeaderText("Remove the charger.");
-                alert.setContentText("92% charged...");
+                alert.setContentText("95% charged...");
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.getIcons().add(new Image("images/chargeLightGrey.png"));
@@ -60,7 +60,7 @@ public class Main extends Application {
         if(batteryStatus.getACLineStatusString().equalsIgnoreCase("online"))
         {
 //            System.out.println(batteryStatus.getBatteryLifePercentLong());
-            if(batteryStatus.getBatteryLifePercentLong() >= 86)
+            if(batteryStatus.getBatteryLifePercentLong() >= 95)
                 return true;
             else
                 return false;
