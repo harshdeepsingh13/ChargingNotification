@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,12 +22,18 @@ public class Main extends Application {
         primaryStage.show();*/
 
 //        checkCharge();
+
+        Kernel32.SYSTEM_POWER_STATUS batteryStatus = new Kernel32.SYSTEM_POWER_STATUS();
         while(true) {
-            while (checkCharge()) {
+            System.out.println("False");
+
+            Kernel32.INSTANCE.GetSystemPowerStatus(batteryStatus);
+            while (checkCharge(batteryStatus)) {
+                Kernel32.INSTANCE.GetSystemPowerStatus(batteryStatus);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Remove Please!!");
                 alert.setHeaderText("Remove the charger.");
-                alert.setContentText("95% charged...");
+                alert.setContentText(batteryStatus.getBatteryLifePercentLong() + "% charged...");
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.getIcons().add(new Image("images/chargeLightGrey.png"));
@@ -51,16 +58,15 @@ public class Main extends Application {
         launch(args);
     }
 
-    public boolean checkCharge()
+    public boolean checkCharge(Kernel32.SYSTEM_POWER_STATUS batteryStatus)
     {
-        Kernel32.SYSTEM_POWER_STATUS batteryStatus = new Kernel32.SYSTEM_POWER_STATUS();
-        Kernel32.INSTANCE.GetSystemPowerStatus(batteryStatus);
+
 
 //        System.out.println(batteryStatus);
         if(batteryStatus.getACLineStatusString().equalsIgnoreCase("online"))
         {
-//            System.out.println(batteryStatus.getBatteryLifePercentLong());
-            if(batteryStatus.getBatteryLifePercentLong() >= 95)
+            System.out.println(batteryStatus.getBatteryLifePercentLong());
+            if(batteryStatus.getBatteryLifePercentLong() >= 96)
                 return true;
             else
                 return false;
