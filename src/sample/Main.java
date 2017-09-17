@@ -26,37 +26,35 @@ public class Main extends Application {
 //        checkCharge();
 
         Kernel32.SYSTEM_POWER_STATUS batteryStatus = new Kernel32.SYSTEM_POWER_STATUS();
-        TextFlow textFlow = new TextFlow();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Remove Please!!");
+        alert.setHeaderText("Remove the charger.");
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/styles/dialogStyle.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialogStyle");
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.getIcons().add(new Image("images/chargeLightGrey.png"));
+        stage.requestFocus();
         while(true) {
-            System.out.println("False");
+//            System.out.println("False");
 
             Kernel32.INSTANCE.GetSystemPowerStatus(batteryStatus);
             while (checkCharge(batteryStatus)) {
                 Kernel32.INSTANCE.GetSystemPowerStatus(batteryStatus);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Remove Please!!");
-                alert.setHeaderText("Remove the charger.");
                 alert.setContentText(batteryStatus.getBatteryLifePercentLong() + "% charged...");
-                DialogPane dialogPane = alert.getDialogPane();
-                dialogPane.getStylesheets().add(getClass().getResource("/styles/dialogStyle.css").toExternalForm());
-                dialogPane.getStyleClass().add("dialogStyle");
-                Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.getIcons().add(new Image("images/chargeLightGrey.png"));
-                stage.requestFocus();
-//                stage.initStyle(StageStyle.UNDECORATED);
-//                stage.setFullScreen(true);
-                stage.setOnCloseRequest(event ->
-                {
-//                    ((Node)(event.getSource())).getScene().getWindow().hide();
-
-                });
                 alert.showAndWait();
-//                alert.show();
-
                 Thread.currentThread().sleep(310000);
             }
         }
+    }
+
+    private boolean isChargingOnline(Kernel32.SYSTEM_POWER_STATUS batteryStatus) {
+        if(batteryStatus.getACLineStatusString().equalsIgnoreCase("online"))
+        {
+            return true;
+        }
+        else return false;
     }
 
 
@@ -71,12 +69,13 @@ public class Main extends Application {
 //        System.out.println(batteryStatus);
         if(batteryStatus.getACLineStatusString().equalsIgnoreCase("online"))
         {
-            System.out.println(batteryStatus.getBatteryLifePercentLong());
+//            System.out.println(batteryStatus.getBatteryLifePercentLong());
             if(batteryStatus.getBatteryLifePercentLong() >= 96)
                 return true;
             else
                 return false;
         }
         else return false;
+//        return true;
     }
 }
