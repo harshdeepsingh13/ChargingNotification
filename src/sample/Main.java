@@ -7,7 +7,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.image.Image;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -24,6 +26,7 @@ public class Main extends Application {
 //        checkCharge();
 
         Kernel32.SYSTEM_POWER_STATUS batteryStatus = new Kernel32.SYSTEM_POWER_STATUS();
+        TextFlow textFlow = new TextFlow();
         while(true) {
             System.out.println("False");
 
@@ -34,6 +37,9 @@ public class Main extends Application {
                 alert.setTitle("Remove Please!!");
                 alert.setHeaderText("Remove the charger.");
                 alert.setContentText(batteryStatus.getBatteryLifePercentLong() + "% charged...");
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(getClass().getResource("/styles/dialogStyle.css").toExternalForm());
+                dialogPane.getStyleClass().add("dialogStyle");
                 Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.getIcons().add(new Image("images/chargeLightGrey.png"));
