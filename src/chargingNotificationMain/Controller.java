@@ -1,4 +1,4 @@
-package sample;
+package chargingNotificationMain;
 
 import javafx.fxml.Initializable;
 

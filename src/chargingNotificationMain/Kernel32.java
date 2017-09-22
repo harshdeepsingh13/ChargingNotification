@@ -1,4 +1,4 @@
-package sample;
+package chargingNotificationMain;
 
 import java.util.ArrayList;
 import java.util.List;
