@@ -35,6 +35,11 @@ public class CheckChargingThread extends Thread {
 
     }
 
+    /**
+     *Checks battery status and battery percentage.
+     * @param batteryStatus
+     * @return TRUE when system is pluggin in and battery is more than 97%, else FALSE.
+     */
     public boolean checkCharge(Kernel32.SYSTEM_POWER_STATUS batteryStatus)
     {
         System.out.println(batteryStatus);

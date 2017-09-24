@@ -25,8 +25,6 @@ public class Main extends Application {
 
         CheckChargingThread checkChargingThread = new CheckChargingThread(this);
 
-
-
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("chargingNotificationfxml/notification.fxml"));
         primaryStage.setTitle("About Us!!");
         primaryStage.setScene(new Scene(root));
